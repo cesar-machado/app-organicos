@@ -12,7 +12,7 @@
         tools:context=".ui.activity.FormProdutoActivity">
 
         <EditText
-            android:id="@+id/nome"
+            android:id="@+id/form_nome"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -23,24 +23,24 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/description"
+            android:id="@+id/form_descricao"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Descrição"
             android:inputType="text"
-            app:layout_constraintEnd_toEndOf="@id/nome"
-            app:layout_constraintStart_toStartOf="@id/nome"
-            app:layout_constraintTop_toBottomOf="@id/nome" />
+            app:layout_constraintEnd_toEndOf="@id/protudo_item_nome"
+            app:layout_constraintStart_toStartOf="@id/form_nome"
+            app:layout_constraintTop_toBottomOf="@id/form_nome" />
 
         <EditText
-            android:id="@+id/value"
+            android:id="@+id/form_valor"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Valor"
             android:inputType="numberDecimal"
-            app:layout_constraintEnd_toEndOf="@id/nome"
-            app:layout_constraintStart_toStartOf="@id/description"
-            app:layout_constraintTop_toBottomOf="@id/description" />
+            app:layout_constraintEnd_toEndOf="@id/protudo_item_nome"
+            app:layout_constraintStart_toStartOf="@id/form_descricao"
+            app:layout_constraintTop_toBottomOf="@id/form_descricao" />
 
         <Button android:id="@+id/btn_save"
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value"
+            app:layout_constraintTop_toBottomOf="@+id/form_valor"
             app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
