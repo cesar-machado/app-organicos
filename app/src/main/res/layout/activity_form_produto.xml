@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:hint="Descrição"
             android:inputType="text"
-            app:layout_constraintEnd_toEndOf="@id/protudo_item_nome"
+            app:layout_constraintEnd_toEndOf="@id/form_nome"
             app:layout_constraintStart_toStartOf="@id/form_nome"
             app:layout_constraintTop_toBottomOf="@id/form_nome" />
 
@@ -38,11 +38,11 @@
             android:layout_height="wrap_content"
             android:hint="Valor"
             android:inputType="numberDecimal"
-            app:layout_constraintEnd_toEndOf="@id/protudo_item_nome"
+            app:layout_constraintEnd_toEndOf="@id/form_descricao"
             app:layout_constraintStart_toStartOf="@id/form_descricao"
             app:layout_constraintTop_toBottomOf="@id/form_descricao" />
 
-        <Button android:id="@+id/btn_save"
+        <Button android:id="@+id/activity_form_btn_salvar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
