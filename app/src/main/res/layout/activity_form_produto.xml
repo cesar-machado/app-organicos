@@ -11,36 +11,81 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.FormProdutoActivity">
 
-        <EditText
-            android:id="@+id/form_nome"
+
+        <ImageView
+            android:id="@+id/form_img"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/frutas"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/form_produto_textInputLayout_nome"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:hint="Nome"
-            android:inputType="text"
-            app:layout_constraintBaseline_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/form_img">
 
-        <EditText
-            android:id="@+id/form_descricao"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_form_produto_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome"
+                android:inputType="text"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/form_produto_textInputLayout_descricao"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Descrição"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="@id/form_nome"
-            app:layout_constraintStart_toStartOf="@id/form_nome"
-            app:layout_constraintTop_toBottomOf="@id/form_nome" />
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/form_produto_textInputLayout_nome">
 
-        <EditText
-            android:id="@+id/form_valor"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_form_produto_descricao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descrição"
+                android:inputType="text"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/form_produto_textInputLayout_valor"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Valor"
-            android:inputType="numberDecimal"
-            app:layout_constraintEnd_toEndOf="@id/form_descricao"
-            app:layout_constraintStart_toStartOf="@id/form_descricao"
-            app:layout_constraintTop_toBottomOf="@id/form_descricao" />
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/form_produto_textInputLayout_descricao">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/activity_form_produto_valor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Valor"
+                android:inputType="text"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <Button android:id="@+id/activity_form_btn_salvar"
             android:layout_width="0dp"
@@ -50,7 +95,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/form_valor"
+            app:layout_constraintTop_toBottomOf="@+id/form_produto_textInputLayout_valor"
             app:layout_constraintVertical_bias="1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -33,11 +33,11 @@ class FormProdutoActivity : AppCompatActivity() {
     }
 
     private fun criaProduto(): Produto {
-        val campoNome = binding.formNome
+        val campoNome = binding.activityFormProdutoNome
         val nome = campoNome.text.toString()
-        val campoDescricao = binding.formDescricao
+        val campoDescricao = binding.activityFormProdutoDescricao
         val descricao = campoDescricao.text.toString()
-        val campoValor = binding.formValor
+        val campoValor = binding.activityFormProdutoValor
         val valorEmTexto = campoValor.text.toString()
         val valor = if (valorEmTexto.isBlank()) {
             BigDecimal.ZERO
