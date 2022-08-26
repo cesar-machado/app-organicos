@@ -13,14 +13,14 @@
 
 
         <ImageView
-            android:id="@+id/form_img"
+            android:id="@+id/activity_form_img"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/frutas"/>
+            app:srcCompat="@drawable/imagem_padrao"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/form_produto_textInputLayout_nome"
@@ -30,7 +30,7 @@
             android:layout_margin="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/form_img">
+            app:layout_constraintTop_toBottomOf="@id/activity_form_img">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/activity_form_produto_nome"

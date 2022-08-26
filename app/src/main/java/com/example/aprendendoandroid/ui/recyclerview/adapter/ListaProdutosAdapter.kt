@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.example.aprendendoandroid.R
 import com.example.aprendendoandroid.databinding.ProductItemBinding
 import com.example.aprendendoandroid.model.Produto
@@ -34,6 +35,7 @@ class ListaProdutosAdapter(
             val formatador: NumberFormat = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
             val valorEmMoeda: String = formatador.format(produto.valor)
             valor.text = valorEmMoeda
+            binding.imageView.load(produto.imagem)
         }
     }
 

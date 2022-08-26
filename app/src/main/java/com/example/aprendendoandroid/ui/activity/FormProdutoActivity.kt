@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import coil.load
 import com.example.aprendendoandroid.R
 import com.example.aprendendoandroid.dao.ProdutosDao
 import com.example.aprendendoandroid.databinding.ActivityFormProdutoBinding
+import com.example.aprendendoandroid.databinding.FormularioImagemBinding
 import com.example.aprendendoandroid.model.Produto
 import java.math.BigDecimal
 
@@ -15,11 +18,30 @@ class FormProdutoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFormProdutoBinding.inflate(layoutInflater)
     }
+    private var url: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         configurarBtnSalvar()
+        binding.activityFormImg.setOnClickListener {
+            val bindingFormImg = FormularioImagemBinding.inflate(layoutInflater)
+            bindingFormImg.formularioImagemBotaoCarregar.setOnClickListener {
+                val url = bindingFormImg.formularioImagemUrl.text.toString()
+                bindingFormImg.formularioImagemImageview.load(url)
+            }
+            AlertDialog.Builder(this)
+                .setView(bindingFormImg.root)
+                .setPositiveButton("Confirmar") { _, _ ->
+                    url = bindingFormImg.formularioImagemUrl.text.toString()
+                    binding.activityFormImg.load(url)
+                }
+                .setNegativeButton("Cancelar") { _, _ ->
+
+                }
+                .show()
+        }
     }
 
     private fun configurarBtnSalvar() {
@@ -62,7 +84,8 @@ class FormProdutoActivity : AppCompatActivity() {
         return Produto(
             nome = nome,
             descricao = descricao,
-            valor = valor
+            valor = valor,
+            imagem = url
         )
     }
 }
