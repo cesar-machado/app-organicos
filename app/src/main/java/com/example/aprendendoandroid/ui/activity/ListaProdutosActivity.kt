@@ -4,7 +4,7 @@ package com.example.aprendendoandroid.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO
 import com.example.aprendendoandroid.R
 import com.example.aprendendoandroid.dao.ProdutosDao
 import com.example.aprendendoandroid.databinding.ActivityListaProdutosBinding
@@ -22,14 +22,14 @@ class ListaProdutosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        title="Organicos"
         configuraRecyclerView()
-        configuraRecyclerView()
+        configuraFab()
     }
 
     override fun onResume() {
         super.onResume()
         adapter.atualiza(dao.buscarTodos())
-        configuraFab()
     }
 
     private fun configuraFab() {
@@ -46,7 +46,15 @@ class ListaProdutosActivity : AppCompatActivity() {
 
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutosRecyclerView
-
         recyclerView.adapter = adapter
+        adapter.quandoClicaNoItem = {
+            val intent = Intent(
+                this,
+                DetalhesdoProduto::class.java
+            ).apply {
+                putExtra(CHAVE_PRODUTO, it)
+            }
+            startActivity(intent)
+        }
     }
 }

@@ -10,6 +10,7 @@ import com.example.aprendendoandroid.R
 import com.example.aprendendoandroid.dao.ProdutosDao
 import com.example.aprendendoandroid.databinding.ActivityFormProdutoBinding
 import com.example.aprendendoandroid.databinding.FormularioImagemBinding
+import com.example.aprendendoandroid.extensions.tentaCarregarImagem
 import com.example.aprendendoandroid.model.Produto
 import java.math.BigDecimal
 
@@ -24,18 +25,19 @@ class FormProdutoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        title= "Cadastrar Produto"
         configurarBtnSalvar()
         binding.activityFormImg.setOnClickListener {
             val bindingFormImg = FormularioImagemBinding.inflate(layoutInflater)
             bindingFormImg.formularioImagemBotaoCarregar.setOnClickListener {
                 val url = bindingFormImg.formularioImagemUrl.text.toString()
-                bindingFormImg.formularioImagemImageview.load(url)
+                bindingFormImg.formularioImagemImageview.tentaCarregarImagem(url)
             }
             AlertDialog.Builder(this)
                 .setView(bindingFormImg.root)
                 .setPositiveButton("Confirmar") { _, _ ->
                     url = bindingFormImg.formularioImagemUrl.text.toString()
-                    binding.activityFormImg.load(url)
+                    binding.activityFormImg.tentaCarregarImagem(url)
                 }
                 .setNegativeButton("Cancelar") { _, _ ->
 

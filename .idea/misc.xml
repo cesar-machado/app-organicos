@@ -9,11 +9,15 @@
         <entry key="app/src/main/res/drawable-xhdpi/ic_launcher_background.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable-xhdpi/ic_launcher_foreground.xml" value="0.1555" />
         <entry key="app/src/main/res/drawable/ic_action_add.xml" value="0.138" />
+        <entry key="app/src/main/res/drawable/placeholder.xml" value="0.1" />
+        <entry key="app/src/main/res/font/poppins.xml" value="0.10875" />
         <entry key="app/src/main/res/layout/acitivity_main.xml" value="0.3211050724637681" />
+        <entry key="app/src/main/res/layout/activity_detalhes_produtos.xml" value="0.17760416666666667" />
         <entry key="app/src/main/res/layout/activity_form_produto.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_lista_produtos.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/formulario_imagem.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/plano_de_fundo_arredondado.xml" value="0.178125" />
         <entry key="app/src/main/res/layout/product_item.xml" value="0.33" />
       </map>
     </option>
