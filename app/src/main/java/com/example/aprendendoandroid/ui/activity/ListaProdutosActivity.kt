@@ -5,16 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO
-import com.example.aprendendoandroid.R
-import com.example.aprendendoandroid.dao.ProdutosDao
+import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityListaProdutosBinding
 import com.example.aprendendoandroid.ui.recyclerview.adapter.ListaProdutosAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListaProdutosActivity : AppCompatActivity() {
 
-    private val dao = ProdutosDao()
-    private val adapter = ListaProdutosAdapter(context = this, produtos = dao.buscarTodos())
+    private val adapter = ListaProdutosAdapter(context = this)
     private val binding by lazy {
         ActivityListaProdutosBinding.inflate(layoutInflater)
     }
@@ -22,14 +19,17 @@ class ListaProdutosActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        title="Organicos"
+        title = "Organicos"
         configuraRecyclerView()
         configuraFab()
+
     }
 
     override fun onResume() {
         super.onResume()
-        adapter.atualiza(dao.buscarTodos())
+        val db = AppDatabase.instance(this)
+        val produtoDao = db.produtoDao()
+        adapter.atualiza((produtoDao.buscaTodos()))
     }
 
     private fun configuraFab() {

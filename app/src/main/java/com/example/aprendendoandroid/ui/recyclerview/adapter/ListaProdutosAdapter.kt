@@ -18,7 +18,7 @@ import java.util.*
 class ListaProdutosAdapter(
 
     private val context: Context,
-    produtos: List<Produto>,
+    produtos: List<Produto> = emptyList(),
     var quandoClicaNoItem: (produto: Produto) -> Unit = {}
 
 

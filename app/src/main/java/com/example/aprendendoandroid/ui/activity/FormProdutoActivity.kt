@@ -2,12 +2,8 @@ package com.example.aprendendoandroid.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import coil.load
-import com.example.aprendendoandroid.R
-import com.example.aprendendoandroid.dao.ProdutosDao
+import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityFormProdutoBinding
 import com.example.aprendendoandroid.databinding.FormularioImagemBinding
 import com.example.aprendendoandroid.extensions.tentaCarregarImagem
@@ -48,10 +44,11 @@ class FormProdutoActivity : AppCompatActivity() {
 
     private fun configurarBtnSalvar() {
         val botaoSalvar = binding.activityFormBtnSalvar
-        val dao = ProdutosDao()
+        val db = AppDatabase.instance(this)
+        val produtoDao = db.produtoDao()
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-            dao.add(produtoNovo)
+            produtoDao.salva(produtoNovo)
             finish()
         }
     }
