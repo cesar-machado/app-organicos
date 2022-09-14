@@ -53,6 +53,17 @@ class FormProdutoActivity : AppCompatActivity() {
         }
     }
 
+//    private fun validateProduto() {
+//        val campoNome = binding.activityFormProdutoNome
+//        val nome = campoNome.text.toString().trim()
+//
+//        if(nome.isEmpty()) {
+//            campoNome.setError("Precisa de um texto")
+//        }
+//
+//
+//    }
+
     private fun criaProduto(): Produto {
         val campoNome = binding.activityFormProdutoNome
         val nome = campoNome.text.toString()
