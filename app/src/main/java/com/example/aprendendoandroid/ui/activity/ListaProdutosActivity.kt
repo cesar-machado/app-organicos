@@ -4,13 +4,9 @@ package com.example.aprendendoandroid.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.ContextMenu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
-import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO
-import com.example.aprendendoandroid.R
+import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
 import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityListaProdutosBinding
 import com.example.aprendendoandroid.ui.recyclerview.adapter.ListaProdutosAdapter
@@ -36,8 +32,6 @@ class ListaProdutosActivity : AppCompatActivity() {
         menuInfo: ContextMenu.ContextMenuInfo
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.menu_contexto_flutuante, menu)
     }
 
 //    override fun onContextItemSelected(item: MenuItem): Boolean {
@@ -80,7 +74,7 @@ class ListaProdutosActivity : AppCompatActivity() {
                 this,
                 DetalhesdoProduto::class.java
             ).apply {
-                putExtra(CHAVE_PRODUTO, it)
+                putExtra(CHAVE_PRODUTO_ID, it.uid)
             }
             startActivity(intent)
         }

@@ -2,12 +2,13 @@ package com.example.aprendendoandroid.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
 import com.example.aprendendoandroid.database.AppDatabase
+import com.example.aprendendoandroid.database.dao.ProdutoDao
 import com.example.aprendendoandroid.databinding.ActivityFormProdutoBinding
-import com.example.aprendendoandroid.databinding.FormularioImagemBinding
 import com.example.aprendendoandroid.extensions.tentaCarregarImagem
 import com.example.aprendendoandroid.model.Produto
+import com.example.aprendendoandroid.ui.dialog.FormImgDialog
 import java.math.BigDecimal
 
 class FormProdutoActivity : AppCompatActivity() {
@@ -16,38 +17,57 @@ class FormProdutoActivity : AppCompatActivity() {
         ActivityFormProdutoBinding.inflate(layoutInflater)
     }
     private var url: String? = null
+    private var produtoId = 0L
+    private val produtoDao: ProdutoDao by lazy {
+        AppDatabase.instance(this).produtoDao()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        title= "Cadastrar Produto"
+        title = "Cadastrar Produto"
         configurarBtnSalvar()
         binding.activityFormImg.setOnClickListener {
-            val bindingFormImg = FormularioImagemBinding.inflate(layoutInflater)
-            bindingFormImg.formularioImagemBotaoCarregar.setOnClickListener {
-                val url = bindingFormImg.formularioImagemUrl.text.toString()
-                bindingFormImg.formularioImagemImageview.tentaCarregarImagem(url)
-            }
-            AlertDialog.Builder(this)
-                .setView(bindingFormImg.root)
-                .setPositiveButton("Confirmar") { _, _ ->
-                    url = bindingFormImg.formularioImagemUrl.text.toString()
+            FormImgDialog(this)
+                .mostra(url) { imagem ->
+                    url = imagem
                     binding.activityFormImg.tentaCarregarImagem(url)
                 }
-                .setNegativeButton("Cancelar") { _, _ ->
-
-                }
-                .show()
         }
+        produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tentaBuscarProdutos()
+    }
+
+    private fun tentaBuscarProdutos() {
+        produtoDao.buscarPorId(produtoId)?.let {
+            preencheCampos(it)
+        }
+    }
+
+    private fun preencheCampos(produto: Produto) {
+        title = "Alterar Produto"
+        url = produto.imagem
+        binding.activityFormImg.tentaCarregarImagem(produto.imagem)
+        binding.activityFormProdutoNome.setText(produto.nome)
+        binding.activityFormProdutoDescricao.setText(produto.descricao)
+        binding.activityFormProdutoValor.setText(produto.valor.toPlainString())
     }
 
     private fun configurarBtnSalvar() {
         val botaoSalvar = binding.activityFormBtnSalvar
-        val db = AppDatabase.instance(this)
-        val produtoDao = db.produtoDao()
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
+//            Aqui eu aprendi a colacar o update porém com onConflict não é necessário
+//            if (produtoId > 0) {
+//                produtoDao.alterar(produtoNovo)
+//            } else {
+//                produtoDao.salva(produtoNovo)
+//            }
             produtoDao.salva(produtoNovo)
             finish()
         }
@@ -92,6 +112,7 @@ class FormProdutoActivity : AppCompatActivity() {
 //        }
 
         return Produto(
+            uid = produtoId,
             nome = nome,
             descricao = descricao,
             valor = valor,
