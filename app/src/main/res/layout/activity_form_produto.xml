@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".ui.activity.FormProdutoActivity">
 
 
@@ -20,7 +20,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/imagem_padrao"/>
+            app:srcCompat="@drawable/imagem_padrao" />
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/form_produto_textInputLayout_nome"
@@ -37,8 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nome"
-                android:inputType="text"
-                />
+                android:inputType="text" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -58,8 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Descrição"
-                android:inputType="text"
-                />
+                android:inputType="text" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -79,15 +78,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Valor"
-                android:inputType="text"
-                />
+                android:inputType="numberDecimal" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
-
-        <Button android:id="@+id/activity_form_btn_salvar"
+        <Button
+            android:id="@+id/activity_form_btn_salvar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

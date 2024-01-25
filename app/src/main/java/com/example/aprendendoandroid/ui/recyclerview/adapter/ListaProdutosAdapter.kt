@@ -82,5 +82,4 @@ class ListaProdutosAdapter(
         this.produtos.addAll(produtos)
         notifyDataSetChanged()
     }
-
 }
