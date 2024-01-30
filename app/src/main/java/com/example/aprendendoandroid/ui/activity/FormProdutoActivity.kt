@@ -2,6 +2,7 @@ package com.example.aprendendoandroid.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
 import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.database.dao.ProdutoDao
@@ -9,6 +10,7 @@ import com.example.aprendendoandroid.databinding.ActivityFormProdutoBinding
 import com.example.aprendendoandroid.extensions.tentaCarregarImagem
 import com.example.aprendendoandroid.model.Produto
 import com.example.aprendendoandroid.ui.dialog.FormImgDialog
+import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
 class FormProdutoActivity : AppCompatActivity() {
@@ -19,8 +21,10 @@ class FormProdutoActivity : AppCompatActivity() {
     private var url: String? = null
     private var produtoId = 0L
     private val produtoDao: ProdutoDao by lazy {
-        AppDatabase.instance(this).produtoDao()
+        val db = AppDatabase.instance(this)
+        db.produtoDao()
     }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +48,13 @@ class FormProdutoActivity : AppCompatActivity() {
     }
 
     private fun tentaBuscarProdutos() {
-        produtoDao.buscarPorId(produtoId)?.let {
-            preencheCampos(it)
+        lifecycleScope.launch {
+            produtoDao.buscarPorId(produtoId).collect {produto ->
+                produto?.let {
+                    title = "Alterar produto"
+                    preencheCampos(it)
+                }
+            }
         }
     }
 
@@ -62,14 +71,10 @@ class FormProdutoActivity : AppCompatActivity() {
         val botaoSalvar = binding.activityFormBtnSalvar
         botaoSalvar.setOnClickListener {
             val produtoNovo = criaProduto()
-//            Aqui eu aprendi a colacar o update porém com onConflict não é necessário
-//            if (produtoId > 0) {
-//                produtoDao.alterar(produtoNovo)
-//            } else {
-//                produtoDao.salva(produtoNovo)
-//            }
-            produtoDao.salva(produtoNovo)
-            finish()
+            lifecycleScope.launch {
+                produtoDao.salva(produtoNovo)
+                finish()
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.aprendendoandroid.extensions.formataParaMoedaBrasileira
 import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
 import com.example.aprendendoandroid.R
@@ -12,6 +13,7 @@ import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityDetalhesProdutosBinding
 import com.example.aprendendoandroid.extensions.tentaCarregarImagem
 import com.example.aprendendoandroid.model.Produto
+import kotlinx.coroutines.launch
 
 class DetalhesdoProduto : AppCompatActivity() {
 
@@ -38,10 +40,15 @@ class DetalhesdoProduto : AppCompatActivity() {
     }
 
     private fun buscaProduto() {
-        produto = produtoDao.buscarPorId(produtoId)
-        produto?.let {
-            preencheCampos(it)
-        } ?: finish()
+        lifecycleScope.launch {
+            produtoDao.buscarPorId(produtoId).collect { produtoEncontrado ->
+                produto = produtoEncontrado
+                produto?.let {
+                    preencheCampos(it)
+                } ?: finish()
+            }
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,9 +59,13 @@ class DetalhesdoProduto : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_detalhes_remover -> {
-                produto?.let { produtoDao.remover(it) }
-                finish()
+                lifecycleScope.launch {
+                    produto?.let { produtoDao.remover(it) }
+                    finish()
+                }
+
             }
+
             R.id.menu_detalhes_editar -> {
                 Intent(this, FormProdutoActivity::class.java).apply {
                     putExtra(CHAVE_PRODUTO_ID, produtoId)

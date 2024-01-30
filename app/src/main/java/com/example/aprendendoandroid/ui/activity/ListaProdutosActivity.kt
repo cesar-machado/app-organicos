@@ -6,16 +6,22 @@ import android.os.Bundle
 import android.view.ContextMenu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
 import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityListaProdutosBinding
 import com.example.aprendendoandroid.ui.recyclerview.adapter.ListaProdutosAdapter
+import kotlinx.coroutines.launch
 
 class ListaProdutosActivity : AppCompatActivity() {
 
     private val adapter = ListaProdutosAdapter(context = this)
     private val binding by lazy {
         ActivityListaProdutosBinding.inflate(layoutInflater)
+    }
+    private val dao by lazy {
+        val db = AppDatabase.instance(this)
+        db.produtoDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +30,11 @@ class ListaProdutosActivity : AppCompatActivity() {
         title = "Organicos"
         configuraRecyclerView()
         configuraFab()
-
+        lifecycleScope.launch {
+            dao.buscaTodos().collect {produtos ->
+                adapter.atualiza(produtos)
+            }
+        }
     }
 
     override fun onCreateContextMenu(
@@ -47,12 +57,13 @@ class ListaProdutosActivity : AppCompatActivity() {
 //        }
 //    }
 
-    override fun onResume() {
-        super.onResume()
-        val db = AppDatabase.instance(this)
-        val produtoDao = db.produtoDao()
-        adapter.atualiza((produtoDao.buscaTodos()))
-    }
+    // UTILIZADO QUANDO NÃO TEM O FLOW PARA ATUALIZAR A ACTIVITY
+//    override fun onResume() {
+//        super.onResume()
+//        val db = AppDatabase.instance(this)
+//        val produtoDao = db.produtoDao()
+//        adapter.atualiza((produtoDao.buscaTodos()))
+//    }
 
     private fun configuraFab() {
         val fab = binding.activityListaProdutosFab
