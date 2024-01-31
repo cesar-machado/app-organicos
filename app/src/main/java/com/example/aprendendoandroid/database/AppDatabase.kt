@@ -10,7 +10,7 @@ import com.example.aprendendoandroid.database.dao.ProdutoDao
 import com.example.aprendendoandroid.model.Produto
 
 
-@Database(entities = [Produto::class], version = 1, exportSchema = false)
+@Database(entities = [Produto::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class   AppDatabase : RoomDatabase() {
     abstract fun produtoDao(): ProdutoDao
