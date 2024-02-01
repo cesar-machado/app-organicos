@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 
-
+@Entity
 data class Usuarios(
+    @PrimaryKey
     val id: String,
     val nome: String,
     val senha: String
