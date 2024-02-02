@@ -17,18 +17,9 @@
         <activity android:name=".ui.activity.FormProdutoActivity" />
         <activity android:name=".ui.activity.DetalhesdoProduto" />
         <activity android:name=".ui.activity.CadastroUsuarioActivity" />
-        <activity android:name=".ui.activity.ListaProdutosActivity" />
-<!--        <activity-->
-<!--            android:name=".ui.activity.ListaProdutosActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+        <activity android:name=".ui.activity.LoginActivity" android:theme="@style/Theme.AprendendoAndroid.NoActionBar" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.ListaProdutosActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,6 +27,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        <activity-->
+<!--            android:name=".ui.activity.LoginActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
 
         <meta-data
             android:name="preloaded_fonts"

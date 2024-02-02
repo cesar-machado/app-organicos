@@ -10,6 +10,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityLoginBinding
+import com.example.aprendendoandroid.extensions.toast
 import com.example.aprendendoandroid.extensions.vaiPara
 import com.example.aprendendoandroid.preferences.dataStore
 import com.example.aprendendoandroid.preferences.usuarioLogadoPreferences
@@ -35,20 +36,22 @@ class LoginActivity : AppCompatActivity() {
             val usuario = binding.activityLoginNome.text.toString()
             val senha = binding.activityLoginSenha.text.toString()
             Log.i("LoginActivity", "onCreate: $usuario - $senha")
-            lifecycleScope.launch {
-                usuarioDao.autentica(usuario, senha)?.let { usuario ->
-                    dataStore.edit { preferences ->
-                        preferences[usuarioLogadoPreferences] = usuario.id
-                    }
-                    vaiPara(ListaProdutosActivity::class.java)
-                } ?: Toast.makeText(
-                    this@LoginActivity,
-                    "Falha na autenticação",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            autentica(usuario, senha)
         }
     }
+
+    private fun autentica(usuario: String, senha: String) {
+        lifecycleScope.launch {
+            usuarioDao.autentica(usuario, senha)?.let { usuario ->
+                dataStore.edit { preferences ->
+                    preferences[usuarioLogadoPreferences] = usuario.id
+                }
+                vaiPara(ListaProdutosActivity::class.java)
+
+            } ?: toast("Falha na autenticação")
+        }
+    }
+
     private fun btnCadastrar() {
         binding.activityLoginBotaoCadastra.setOnClickListener {
             vaiPara(CadastroUsuarioActivity::class.java)

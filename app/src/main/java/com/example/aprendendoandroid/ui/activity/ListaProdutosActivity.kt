@@ -3,25 +3,42 @@ package com.example.aprendendoandroid.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ContextMenu
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
 import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
+import com.example.aprendendoandroid.R
 import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityListaProdutosBinding
+import com.example.aprendendoandroid.extensions.vaiPara
+import com.example.aprendendoandroid.preferences.dataStore
+import com.example.aprendendoandroid.preferences.usuarioLogadoPreferences
 import com.example.aprendendoandroid.ui.recyclerview.adapter.ListaProdutosAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
-class ListaProdutosActivity : AppCompatActivity() {
+class ListaProdutosActivity : UsuarioBaseActivity() {
 
     private val adapter = ListaProdutosAdapter(context = this)
     private val binding by lazy {
         ActivityListaProdutosBinding.inflate(layoutInflater)
     }
-    private val dao by lazy {
+    private val produtoDao by lazy {
         val db = AppDatabase.instance(this)
         db.produtoDao()
+    }
+
+    private val usuarioDao by lazy {
+        AppDatabase.instance(this).UsuarioDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +48,29 @@ class ListaProdutosActivity : AppCompatActivity() {
         configuraRecyclerView()
         configuraFab()
         lifecycleScope.launch {
-            dao.buscaTodos().collect {produtos ->
-                adapter.atualiza(produtos)
+            launch {
+                delay(1000)
+                usuario?.let{
+
+                    buscaProdutosUsuario()
+                }
+
             }
         }
     }
+
+
+
+
+
+    private suspend fun buscaProdutosUsuario() {
+        produtoDao.buscaTodos().collect { produtos ->
+            adapter.atualiza(produtos)
+        }
+    }
+
+
+
 
     override fun onCreateContextMenu(
         menu: ContextMenu, v: View,
@@ -44,20 +79,23 @@ class ListaProdutosActivity : AppCompatActivity() {
         super.onCreateContextMenu(menu, v, menuInfo)
     }
 
-//    override fun onContextItemSelected(item: MenuItem): Boolean {
-//        val info = item.menuInfo as AdapterView.AdapterContextMenuInfo
-//        return when (item.itemId) {
-//            R.id.menu_contexto_editar -> {
-//                true
-//            }
-//            R.id.menu_contexto_remover -> {
-//                false
-//            }
-//            else -> super.onContextItemSelected(item)
-//        }
-//    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_lista_produtos, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
 
-    // UTILIZADO QUANDO NÃO TEM O FLOW PARA ATUALIZAR A ACTIVITY
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_lista_produtos_sair_app -> {
+                deslogarUsuario()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+
+// UTILIZADO QUANDO NÃO TEM O FLOW PARA ATUALIZAR A ACTIVITY
 //    override fun onResume() {
 //        super.onResume()
 //        val db = AppDatabase.instance(this)

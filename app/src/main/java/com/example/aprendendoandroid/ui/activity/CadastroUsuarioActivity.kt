@@ -8,6 +8,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.aprendendoandroid.database.AppDatabase
 import com.example.aprendendoandroid.databinding.ActivityFormUsuariosBinding
 import com.example.aprendendoandroid.databinding.ActivityLoginBinding
+import com.example.aprendendoandroid.extensions.toast
 import com.example.aprendendoandroid.model.Produto
 import com.example.aprendendoandroid.model.Usuarios
 import kotlinx.coroutines.launch
@@ -38,11 +39,7 @@ class CadastroUsuarioActivity : AppCompatActivity() {
                     finish()
                 }catch (e: Exception) {
                     Log.e("CadastroUsuario", "configuraBotaoCadastrar: ", e)
-                    Toast.makeText(
-                        this@CadastroUsuarioActivity,
-                        "Falha ao cadastrar usuário",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    toast("Falha ao cadastrar usuário")
                 }
             }
         }
