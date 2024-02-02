@@ -2,6 +2,7 @@ package com.example.aprendendoandroid.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import br.com.aprendendoandroid.ui.activity.CHAVE_PRODUTO_ID
 import com.example.aprendendoandroid.database.AppDatabase
@@ -10,10 +11,11 @@ import com.example.aprendendoandroid.databinding.ActivityFormProdutoBinding
 import com.example.aprendendoandroid.extensions.tentaCarregarImagem
 import com.example.aprendendoandroid.model.Produto
 import com.example.aprendendoandroid.ui.dialog.FormImgDialog
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 import java.math.BigDecimal
 
-class FormProdutoActivity : AppCompatActivity() {
+class FormProdutoActivity : UsuarioBaseActivity() {
 
     private val binding by lazy {
         ActivityFormProdutoBinding.inflate(layoutInflater)
@@ -39,6 +41,11 @@ class FormProdutoActivity : AppCompatActivity() {
                     binding.activityFormImg.tentaCarregarImagem(url)
                 }
         }
+        tentaCarregarProduto()
+
+    }
+
+    private fun tentaCarregarProduto() {
         produtoId = intent.getLongExtra(CHAVE_PRODUTO_ID, 0L)
     }
 
@@ -70,10 +77,12 @@ class FormProdutoActivity : AppCompatActivity() {
     private fun configurarBtnSalvar() {
         val botaoSalvar = binding.activityFormBtnSalvar
         botaoSalvar.setOnClickListener {
-            val produtoNovo = criaProduto()
             lifecycleScope.launch {
-                produtoDao.salva(produtoNovo)
-                finish()
+                usuario.value?.let { usuario ->
+                    val produtoNovo = criaProduto(usuario.id)
+                    produtoDao.salva(produtoNovo)
+                    finish()
+                }
             }
         }
     }
@@ -89,7 +98,7 @@ class FormProdutoActivity : AppCompatActivity() {
 //
 //    }
 
-    private fun criaProduto(): Produto {
+    private fun criaProduto(usuarioId: String): Produto {
         val campoNome = binding.activityFormProdutoNome
         val nome = campoNome.text.toString()
         val campoDescricao = binding.activityFormProdutoDescricao
@@ -121,7 +130,9 @@ class FormProdutoActivity : AppCompatActivity() {
             nome = nome,
             descricao = descricao,
             valor = valor,
-            imagem = url
+            imagem = url,
+            usuarioId = usuarioId
+
         )
     }
 }

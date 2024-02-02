@@ -10,6 +10,9 @@ interface ProdutoDao {
     @Query("SELECT * FROM PRODUTO")
     fun buscaTodos() : Flow<List<Produto>>
 
+    @Query("SELECT * FROM Produto WHERE usuarioId = :usuarioId")
+    fun buscaTodosDoUsuario(usuarioId: String) : Flow<List<Produto>>
+
     // Com o onConflict ele altera e não precisa de do update
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun salva(produto: Produto)

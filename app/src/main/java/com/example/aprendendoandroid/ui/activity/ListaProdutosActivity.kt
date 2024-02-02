@@ -22,6 +22,7 @@ import com.example.aprendendoandroid.ui.recyclerview.adapter.ListaProdutosAdapte
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
@@ -49,10 +50,10 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
         configuraFab()
         lifecycleScope.launch {
             launch {
-                delay(1000)
-                usuario?.let{
-
-                    buscaProdutosUsuario()
+                usuario
+                    .filterNotNull()
+                    .collect{usuario ->
+                    buscaProdutosUsuario(usuario.id)
                 }
 
             }
@@ -63,8 +64,8 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
 
 
 
-    private suspend fun buscaProdutosUsuario() {
-        produtoDao.buscaTodos().collect { produtos ->
+    private suspend fun buscaProdutosUsuario(usuarioId: String) {
+        produtoDao.buscaTodosDoUsuario(usuarioId).collect { produtos ->
             adapter.atualiza(produtos)
         }
     }
