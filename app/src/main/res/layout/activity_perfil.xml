@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    tools:context=".ui.activity.PerfilActivity">
+
+
+    <TextView
+        android:id="@+id/activity_perfil_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+
+        app:layout_constraintBottom_toTopOf="@id/activity_perfil_usuario"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="cmach" />
+
+
+
+    <TextView
+        android:id="@+id/activity_perfil_usuario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:fontFamily="@font/poppins_bold"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/activity_perfil_nome"
+        tools:text="@tools:sample/lorem[10]"
+        />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_perfil_btn_sair"
+        android:backgroundTint="@color/red"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/sair"
+        android:gravity="center"
+        app:iconGravity="textStart"
+        app:icon="@drawable/baseline_exit_to_app_24"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_perfil_usuario"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

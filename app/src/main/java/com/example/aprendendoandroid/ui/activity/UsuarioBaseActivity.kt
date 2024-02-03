@@ -2,6 +2,7 @@ package com.example.aprendendoandroid.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.lifecycleScope
@@ -12,6 +13,7 @@ import com.example.aprendendoandroid.preferences.dataStore
 import com.example.aprendendoandroid.preferences.usuarioLogadoPreferences
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
@@ -38,11 +40,14 @@ abstract class UsuarioBaseActivity : AppCompatActivity() {
         }
     }
 
+
+
     private suspend fun buscaUsuario(usuarioId: String) : Usuarios?  {
         return usuarioDao
             .buscaPorId(usuarioId)
             .firstOrNull().also {
                 _usuario.value = it
+
             }
     }
 

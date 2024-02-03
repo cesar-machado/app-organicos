@@ -55,12 +55,9 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
                     .collect{usuario ->
                     buscaProdutosUsuario(usuario.id)
                 }
-
             }
         }
     }
-
-
 
 
 
@@ -88,12 +85,16 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_lista_produtos_sair_app -> {
-                deslogarUsuario()
+                vaiParaPerfil()
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
+    private fun vaiParaPerfil() {
+        val intent = Intent(this, PerfilActivity::class.java)
+        startActivity(intent)
+    }
 
 
 // UTILIZADO QUANDO NÃO TEM O FLOW PARA ATUALIZAR A ACTIVITY
@@ -115,6 +116,8 @@ class ListaProdutosActivity : UsuarioBaseActivity() {
         val intent = Intent(this, FormProdutoActivity::class.java)
         startActivity(intent)
     }
+
+
 
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutosRecyclerView
